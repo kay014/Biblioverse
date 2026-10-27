@@ -1,0 +1,392 @@
+{
+  "info": {
+    "name": "Biblioverse Backend API",
+    "description": "Complete Biblioverse Backend API Test Suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "biblioverse"
+  },
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/health",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "health"]
+        },
+        "description": "Verify API is running"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test User {{$timestamp}}\",\n  \"email\": \"testuser{{$timestamp}}@example.com\",\n  \"password\": \"Test@123456\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/auth/register",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Register a new user"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test@123456\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/auth/login",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Login with user credentials. Copy token to AUTH_TOKEN variable."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/auth/me",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "auth", "me"]
+        },
+        "description": "Get current authenticated user profile"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Search Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/search?q=harry",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "harry"
+            }
+          ]
+        },
+        "description": "Search for books. Copy first result._id to BOOK_ID variable."
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get Book By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}"]
+        },
+        "description": "Get detailed information about a specific book"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Discover Books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/discover",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "discover"]
+        },
+        "description": "Get discovery book recommendations"
+      },
+      "response": []
+    },
+    {
+      "name": "8. Save Book to Library",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/save",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "save"]
+        },
+        "description": "Save a book to user's library"
+      },
+      "response": []
+    },
+    {
+      "name": "9. Update Reading Status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"reading\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/status",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "status"]
+        },
+        "description": "Update book reading status (reading/completed/abandoned)"
+      },
+      "response": []
+    },
+    {
+      "name": "10. Get Library",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/library",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "library"]
+        },
+        "description": "Get all books in user's library"
+      },
+      "response": []
+    },
+    {
+      "name": "11. Create Review",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rating\": 5,\n  \"text\": \"Amazing book! Highly recommend.\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/reviews",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "reviews"]
+        },
+        "description": "Create a review for a book"
+      },
+      "response": []
+    },
+    {
+      "name": "12. Get Book Reviews",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/reviews",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "reviews"]
+        },
+        "description": "Get all reviews for a book"
+      },
+      "response": []
+    },
+    {
+      "name": "13. Update Review",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookId\": \"{{BOOK_ID}}\",\n  \"rating\": 4,\n  \"text\": \"Great book, very engaging!\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/reviews",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "reviews"]
+        },
+        "description": "Update an existing review"
+      },
+      "response": []
+    },
+    {
+      "name": "14. Delete Review",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/reviews?bookId={{BOOK_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "reviews"],
+          "query": [
+            {
+              "key": "bookId",
+              "value": "{{BOOK_ID}}"
+            }
+          ]
+        },
+        "description": "Delete a review"
+      },
+      "response": []
+    },
+    {
+      "name": "15. Unsave Book",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/{{BOOK_ID}}/save",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "{{BOOK_ID}}", "save"]
+        },
+        "description": "Remove book from user's library"
+      },
+      "response": []
+    },
+    {
+      "name": "16. Get Saved Books",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/books/saved",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "books", "saved"]
+        },
+        "description": "Get all saved books for user"
+      },
+      "response": []
+    },
+    {
+      "name": "17. Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AUTH_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/auth/logout",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Logout the current user"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "AUTH_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "BOOK_ID",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
